@@ -1,0 +1,198 @@
+{
+  "method": "Deterministic optimal actions; not WPM. Lowercase ASCII, no corrections or Done. Circle immediate uses A confirmations; Circle wait-per-letter substitutes 750 ms pauses; Cloud waits only before Space and final commit. Crank tick counts are separate and not comparable as physical actions.",
+  "corpora": {
+    "English": [
+      "client notes",
+      "project update",
+      "meet anna at noon",
+      "weekly planning",
+      "important reminder",
+      "release notes ready"
+    ],
+    "German": [
+      "neue notiz",
+      "termin morgen",
+      "einkaufsliste",
+      "besprechung um zehn",
+      "projekt status",
+      "kunden termin"
+    ]
+  },
+  "results": {
+    "Combined": {
+      "characters": 177,
+      "phrases": 12,
+      "layouts": {
+        "ABC (shipped 1.0.1)": {
+          "actions": 788,
+          "buttons": 177,
+          "dpad": 611,
+          "actions_per_character": 4.451977401129944,
+          "reduction_vs_ABC_percent": 0.0
+        },
+        "Wrap+ prototype": {
+          "actions": 609,
+          "buttons": 177,
+          "dpad": 432,
+          "actions_per_character": 3.440677966101695,
+          "reduction_vs_ABC_percent": 22.715736040609137
+        },
+        "Circle D-pad prototype": {
+          "actions": 819,
+          "buttons": 324,
+          "dpad": 495,
+          "crank_ticks": 0,
+          "actions_per_character": 4.627118644067797,
+          "reduction_vs_ABC_percent": -3.934010152284273
+        },
+        "Circle D-pad (wait per letter)": {
+          "actions": 672,
+          "waits": 147,
+          "actions_per_character": 3.7966101694915255,
+          "reduction_vs_ABC_percent": 14.720812182741117
+        },
+        "Cloud Multi-Tap": {
+          "crank_ticks": 0,
+          "auto_commit_waits": 27,
+          "dpad": 138,
+          "actions": 509,
+          "buttons": 371,
+          "actions_per_character": 2.8757062146892656,
+          "reduction_vs_ABC_percent": 35.40609137055838
+        },
+        "Circle Crank prototype": {
+          "actions": null,
+          "buttons": 324,
+          "dpad": 0,
+          "crank_ticks": 615
+        },
+        "Cloud Crank": {
+          "crank_ticks": 465,
+          "auto_commit_waits": 27,
+          "dpad": 162,
+          "actions": null,
+          "buttons": 15,
+          "continuous_turn_gestures": 162,
+          "control_gestures": 339,
+          "gesture_reduction_vs_button_presses_percent": 33.39882121807466,
+          "selection_step_degrees": 30.080213903743317,
+          "total_absolute_rotation_degrees": 13987.299465240643,
+          "time_speedup_percent": null
+        }
+      }
+    },
+    "English": {
+      "characters": 95,
+      "phrases": 6,
+      "layouts": {
+        "ABC (shipped 1.0.1)": {
+          "actions": 411,
+          "buttons": 95,
+          "dpad": 316,
+          "actions_per_character": 4.326315789473684,
+          "reduction_vs_ABC_percent": 0.0
+        },
+        "Wrap+ prototype": {
+          "actions": 310,
+          "buttons": 95,
+          "dpad": 215,
+          "actions_per_character": 3.263157894736842,
+          "reduction_vs_ABC_percent": 24.574209245742097
+        },
+        "Circle D-pad prototype": {
+          "actions": 437,
+          "buttons": 172,
+          "dpad": 265,
+          "crank_ticks": 0,
+          "actions_per_character": 4.6,
+          "reduction_vs_ABC_percent": -6.326034063260333
+        },
+        "Circle D-pad (wait per letter)": {
+          "actions": 360,
+          "waits": 77,
+          "actions_per_character": 3.789473684210526,
+          "reduction_vs_ABC_percent": 12.408759124087588
+        },
+        "Cloud Multi-Tap": {
+          "crank_ticks": 0,
+          "auto_commit_waits": 15,
+          "dpad": 75,
+          "actions": 277,
+          "buttons": 202,
+          "actions_per_character": 2.9157894736842107,
+          "reduction_vs_ABC_percent": 32.60340632603407
+        },
+        "Circle Crank prototype": {
+          "actions": null,
+          "buttons": 172,
+          "dpad": 0,
+          "crank_ticks": 319
+        },
+        "Cloud Crank": {
+          "crank_ticks": 242,
+          "auto_commit_waits": 15,
+          "dpad": 86,
+          "actions": null,
+          "buttons": 9
+        }
+      }
+    },
+    "German": {
+      "characters": 82,
+      "phrases": 6,
+      "layouts": {
+        "ABC (shipped 1.0.1)": {
+          "actions": 377,
+          "buttons": 82,
+          "dpad": 295,
+          "actions_per_character": 4.597560975609756,
+          "reduction_vs_ABC_percent": 0.0
+        },
+        "Wrap+ prototype": {
+          "actions": 299,
+          "buttons": 82,
+          "dpad": 217,
+          "actions_per_character": 3.6463414634146343,
+          "reduction_vs_ABC_percent": 20.68965517241379
+        },
+        "Circle D-pad prototype": {
+          "actions": 382,
+          "buttons": 152,
+          "dpad": 230,
+          "crank_ticks": 0,
+          "actions_per_character": 4.658536585365853,
+          "reduction_vs_ABC_percent": -1.3262599469495928
+        },
+        "Circle D-pad (wait per letter)": {
+          "actions": 312,
+          "waits": 70,
+          "actions_per_character": 3.8048780487804876,
+          "reduction_vs_ABC_percent": 17.24137931034483
+        },
+        "Cloud Multi-Tap": {
+          "crank_ticks": 0,
+          "auto_commit_waits": 12,
+          "dpad": 63,
+          "actions": 232,
+          "buttons": 169,
+          "actions_per_character": 2.8292682926829267,
+          "reduction_vs_ABC_percent": 38.46153846153846
+        },
+        "Circle Crank prototype": {
+          "actions": null,
+          "buttons": 152,
+          "dpad": 0,
+          "crank_ticks": 296
+        },
+        "Cloud Crank": {
+          "crank_ticks": 223,
+          "auto_commit_waits": 12,
+          "dpad": 76,
+          "actions": null,
+          "buttons": 6
+        }
+      }
+    }
+  },
+  "crank_comparison_note": "339 gestures versus 509 button presses is 33.4% fewer separate control gestures. One continuous turn for a letter counts once despite multiple selection ticks. There are 465 ticks, about 38.9 crank revolutions of absolute rotation. This is not measured time or WPM and does not establish a crank speed advantage."
+}
