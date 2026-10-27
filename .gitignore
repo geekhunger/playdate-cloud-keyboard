@@ -1,0 +1,9 @@
+build/
+dist/
+output/
+*.pdx/
+Source/pdex.*
+.DS_Store
+__pycache__/
+*.py[cod]
+.env*
