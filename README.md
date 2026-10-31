@@ -1,123 +1,97 @@
-# Cloud Keyboard
+# Playdate Touchtyping Keyboard
 
-### small clouds. big words.
+A native C text-entry keyboard for Playdate, extracted from **brb Build 91**.
+Hold a D-pad direction, choose a character with A/B or the crank, then release
+that direction to insert it. The model and rendering are the same native code;
+the library has no account, server or network dependency.
 
-A floating, one-bit keyboard for **Playdate**. Pick a cloud with the D-pad,
-cycle letters with A/B, or give the crank a spin. Little cloud tiles, soft
-pixel shadows and just enough motion to make entering a note feel good.
+![The native keyboard in brb Build 91, with fictional demo content](docs/media/keyboard-build91.gif)
 
-![Typing hello with Cloud Keyboard](docs/media/typing.gif)
-
-**Drop it into your game. Get text back.** Cloud Keyboard handles the draft,
-cursor, input focus and System Menu. Your app decides what to do with the result.
-
-[Get started](#drop-it-in) · [Controls](#controls) · [API and integration guide](docs/integration.md) · [Download the demo](https://github.com/geekhunger/playdate-cloud-keyboard/releases/latest)
-
-## A little crank goes a long way
-
-The crank moves through the entire selected group in both directions. A or B
-held on a selected letter gives you its opposite case for that one character.
-The rest of your sentence keeps its case.
-
-![Crank selection and one-character capitalization](docs/media/crank.gif)
-
-## Made for small screens and real buttons
-
-- Four letter groups, each split between B and A.
-- Selected letters stay inside their cloud. The matching side button lights up.
-- Floating clouds lift away from their soft, dithered shadows.
-- A second layer brings numbers and cursor controls.
-- Clear, Done and Cancel live in the System Menu.
-- Native 400 × 240 graphics. No runtime dependencies beyond the Playdate SDK.
-
-![Numbers and cursor controls](docs/media/tools.gif)
-
-## Drop it in
-
-Copy **`Source/keyboard.lua`** and **`Source/keyboard/`** into your project's
-`Source/`. Keep the paths intact, including the bitmap assets.
-
-```lua
-import 'keyboard'
-
-local text = ''
-local keyboard = Keyboard.new({
-    maxLength = 64, -- optional
-    onDone = function(value) text = value end,
-    onCancel = function() end,
-})
-
-function openInput()
-    local ok, err = keyboard:show(text)
-    assert(ok, err)
-end
-
-function playdate.update()
-    if keyboard:isVisible() then
-        keyboard:update()
-        keyboard:draw()
-        return
-    end
-    -- Your app's update and drawing.
-end
-```
-
-The host keeps its update loop and owns persistence. While the keyboard is open,
-pause your own button polling. It uses Playdate's modal input-handler stack and
-needs all **three custom System Menu slots** for Clear, Done and Cancel.
-See the [integration guide](docs/integration.md) for the full API and lifecycle.
+*Recorded in brb's native renderer with fictional demo content. The standalone
+example below uses the exported library.*
 
 ## Controls
 
-| State | Input | Action |
-| --- | --- | --- |
-| Letter layer | D-pad ↑ / → / ↓ / ← | `abcd efgh` / `ijkl mnop` / `qrst uvwx` / `yz,. !?-_` |
-| Group selected | B / A tap | Cycle the left / right half |
-| Group selected | Crank | Cycle the entire group in either direction |
-| Letter preview selected | A or B hold | Commit this character in the opposite case |
-| Group selected | Wait 750 ms | Accept the preview, or reset an empty group |
-| No group | A tap / B tap | Space / Delete |
-| No group | A hold | Toggle upper/lower case |
-| No group | First B press held | Switch letter/number layers |
-| No group | B tap, release, then B press-and-hold | Repeated Delete until release |
-| Number layer | D-pad ↑ | `12345 67890` |
-| Number layer | D-pad ← / → | Move cursor; hold to repeat |
-| System Menu | Clear / Done / Cancel | Empty draft / return text / discard draft |
+| Input | Action |
+| --- | --- |
+| Hold D-pad direction | Open its character group |
+| A / B within a group | Select forward / backward; hold to repeat |
+| Crank within a group | Select with its own detent and reversal resistance |
+| Release the group's direction | Insert the selected item; close the group |
+| Idle A tap | Switch lowercase/punctuation and uppercase/emoji |
+| Hold idle A + Left/Right or crank | Move the grapheme cursor |
+| Hold idle A + Up/Down | Switch keyboard / emoji-set view |
+| Idle B | Delete the previous grapheme; hold to repeat |
+| Fresh A+B overlap, Return item or Done | Open Save / Discard decision |
+| Release opening buttons, then fresh A / B | Save / Discard |
 
-Holds trigger after 350 ms. The second B press must start within 500 ms of the
-first tap's release. Cursor repeat starts after 250 ms. Repeat stops on release.
+There is **no idle timeout or automatic character acceptance**. Releasing a
+group without choosing an item inserts nothing. Save validates the field and
+returns `HELLO_KEYBOARD_DONE`; the host accepts the value and closes the editor.
+Discard restores the original value and closes it.
 
-The current keyboard is **single-line, printable ASCII**. It does not yet offer
-umlauts or other Unicode input. `show()` rejects unsupported initial text rather
-than changing it silently.
+## Run the C example
 
-## Build the demo
-
-Install the [Playdate SDK](https://play.date/dev/), then:
+Install the [Playdate SDK](https://play.date/dev/) and its supported ARM C toolchain.
+Set `PLAYDATE_SDK_PATH` to your SDK directory, then:
 
 ```sh
-export PLAYDATE_SDK_PATH=/path/to/PlaydateSDK
-make build
-make test # focused input/controller checks
+make test-core       # SDK-independent model/helper tests
+make test            # includes mock-SDK rendering; needs SDK headers
+make test-sanitize   # same suite with address/undefined-behavior checks
+make simulator       # compile Simulator code
+make device          # compile ARM code
+make check-stack     # inspect bounded ARM stack usage
+make all             # create local debug touchtyping-keyboard.pdx
 ```
 
-Open `build/CloudKeyboard.pdx` in the Simulator, or sideload it onto a Playdate.
-The source was built with SDK 3.1.2 and the input has been checked on real hardware.
+[`examples/keyboard_minimal.c`](examples/keyboard_minimal.c) is the complete C SDK
+entry point compiled directly by the Makefile. It opens an editor, copies
+saved text into host storage, and lets A reopen it. It initializes the library
+once, uses the built-in Roobert font, and passes input updates and rendering
+every visible frame. Local
+builds are for internal debugging; this repository distributes source rather
+than a release PDX or ZIP. Automated checks do not establish hardware validation.
 
-To regenerate the artwork, install Pillow and run `make artwork`. To regenerate
-the README animations from the actual SDK renderer:
+## Use it in your game
 
-```sh
-python3 tools/record_demo.py
+Copy `src/`, the three `Source/keyboard/` image tables and their license notices.
+Compile the seven C files listed in the [integration guide](docs/integration.md)
+with the SDK headers and `-lm`. The optional `Source/unicode/glyphs.bin` adds
+broader Unicode rendering. Embedded Everyday emoji need no external atlas.
+
+```c
+static HelloKeyboard keyboard;       // Large persistent state: avoid the ARM stack.
+HelloKeyboardConfig config;
+hello_keyboard_default_config(&config);
+hello_keyboard_init_with_config(&keyboard, pd, &config);
+hello_keyboard_open_configured(&keyboard, "", NULL);
 ```
 
-On macOS the recording script finds the Simulator inside `PLAYDATE_SDK_PATH`.
-On other platforms set `PLAYDATE_SIMULATOR` to its executable path. The GIFs use
-nearest-neighbor scaling and two colors; no smoothed mockup frames are mixed in.
+Text is UTF-8; editing and cursor movement respect grapheme clusters. Defaults
+allow 160 graphemes within a separate 4096-byte ceiling. Configure field type,
+length, byte limit, trimming, captions and feedback for each view. Emoji entry
+and the picker are configurable; the included set has 21 original 1-bit motifs.
+Unicode rendering has coverage and shaping limits described in the guide.
 
-## License and credits
+The host owns the SDK, optional font/Unicode renderer and callback contexts.
+The keyboard copies text, groups, captions and field policies; custom emoji
+catalogs remain borrowed immutable data. Keep keyboard state for application
+lifetime, copy borrowed result text before reuse, and close the editor before
+restoring host menu items. See [ownership and lifecycle](docs/integration.md#ownership-memory-and-teardown).
 
-Code and original UI artwork: [MIT](LICENSE). The Oklahoma Bold bitmap font is
-from Panic's Playdate SDK and retains its [CC BY 4.0 terms](THIRD_PARTY.md).
+Library defaults use 350 ms hold / 100 ms repeat and button-navigation scale
+`1.0`. brb configures scale `0.5` (175 ms / 50 ms for selection), its own row
+height and ten leading cells in group 1. Those are explicit host choices;
+crank policy remains separate. API identifiers retain their original
+`HelloKeyboard` / `Brb` names for compatibility.
 
-Made by [Geekhunger](https://geekhunger.com).
+## Source and licenses
+
+Current implementation: native C under `src/`. The earlier Lua implementation
+and its original documentation remain archived under [`legacy/lua/`](legacy/lua/);
+they are not a current Lua binding or a behavior-parity claim.
+
+Code and original artwork: [MIT](LICENSE). Font-derived assets and Unicode data
+retain their [third-party licenses and credits](THIRD_PARTY.md). Playdate is a
+product of Panic; this is an independent community library.

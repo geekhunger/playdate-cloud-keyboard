@@ -1,0 +1,6 @@
+name=Cloud Keyboard
+author=Geekhunger
+description=A floating D-pad and crank keyboard for Playdate.
+bundleID=com.geekhunger.cloudkeyboard
+version=1.0.0
+buildNumber=1

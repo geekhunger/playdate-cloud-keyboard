@@ -20,5 +20,5 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-Font resources and font-derived bitmap glyphs retain their original
-CC BY 4.0 terms; see THIRD_PARTY.md.
+Third-party fonts, font-derived bitmap glyphs and Unicode data retain their
+respective original licenses; see THIRD_PARTY.md and Source/licenses/.

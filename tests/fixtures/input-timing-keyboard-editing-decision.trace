@@ -1,0 +1,20 @@
+combo 0 +0 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +1 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +174 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +349 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +350 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +351 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 0 +700 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+released 0 dialog=1 ready=1 mask=0 text=secret
+tap 0 +703 choice=A result=done dialog=0 visible=1 text=secret
+settled 0 +20000 dialog=0 visible=1 text=secret
+combo 1 +0 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +1 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +174 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +349 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +350 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +351 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+combo 1 +700 mask=0 dialog=1 ready=0 fills=0,0 text=secret
+released 1 dialog=1 ready=1 mask=0 text=secret
+tap 1 +703 choice=B result=cancelled dialog=0 visible=0 text=original
+settled 1 +20000 dialog=0 visible=0 text=original

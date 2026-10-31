@@ -1,6 +1,6 @@
-name=Cloud Keyboard
+name=Touchtyping Keyboard
 author=Geekhunger
-description=A floating D-pad and crank keyboard for Playdate.
-bundleID=com.geekhunger.cloudkeyboard
+description=Native C keyboard integration example.
+bundleID=com.geekhunger.touchtyping-keyboard
 version=1.0.0
 buildNumber=1
