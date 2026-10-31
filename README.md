@@ -1,97 +1,96 @@
 # Playdate Touchtyping Keyboard
 
-A native C text-entry keyboard for Playdate, extracted from **brb Build 91**.
-Hold a D-pad direction, choose a character with A/B or the crank, then release
-that direction to insert it. The model and rendering are the same native code;
-the library has no account, server or network dependency.
+**Hold a direction. Pick a character. Release to write.**
 
-![The native keyboard in brb Build 91, with fictional demo content](docs/media/keyboard-build91.gif)
+Type messages, notes and names with the controls already under your thumbs.
+Touchtyping turns Playdate's D-pad, buttons and crank into a keyboard you can
+learn by feel.
 
-*Recorded in brb's native renderer with fictional demo content. The standalone
-example below uses the exported library.*
+![Touchtyping Keyboard in action](docs/media/keyboard-build91.gif)
 
-## Controls
+## How it works
 
-| Input | Action |
-| --- | --- |
-| Hold D-pad direction | Open its character group |
-| A / B within a group | Select forward / backward; hold to repeat |
-| Crank within a group | Select with its own detent and reversal resistance |
-| Release the group's direction | Insert the selected item; close the group |
-| Idle A tap | Switch lowercase/punctuation and uppercase/emoji |
-| Hold idle A + Left/Right or crank | Move the grapheme cursor |
-| Hold idle A + Up/Down | Switch keyboard / emoji-set view |
-| Idle B | Delete the previous grapheme; hold to repeat |
-| Fresh A+B overlap, Return item or Done | Open Save / Discard decision |
-| Release opening buttons, then fresh A / B | Save / Discard |
+Each D-pad direction opens a group of characters. Keep it held and use **A** to
+select forward, **B** to select backward, or turn the **crank**. Release the
+direction to insert the character. Then choose the next one.
 
-There is **no idle timeout or automatic character acceptance**. Releasing a
-group without choosing an item inserts nothing. Save validates the field and
-returns `HELLO_KEYBOARD_DONE`; the host accepts the value and closes the editor.
-Discard restores the original value and closes it.
+Common letters sit near the ends of their groups, within easy reach of either
+button. The groups stay in place, so the movements become familiar. Use both
+thumbs, or let the crank do the selecting.
 
-## Run the C example
+With the groups closed, tap A to shift or B to delete. Hold A to move the cursor
+or switch views. Unicode text, 21 pixel emoji and cursor editing are included.
 
-Install the [Playdate SDK](https://play.date/dev/) and its supported ARM C toolchain.
-Set `PLAYDATE_SDK_PATH` to your SDK directory, then:
+> “Wish your keyboard was used in other apps like ToDo lists etc”
+>
+> — [Dangerous_Ad5614, r/PlaydateConsole](https://www.reddit.com/r/PlaydateConsole/comments/1xhutcf/comment/19rtkjog2829v/)
 
-```sh
-make test-core       # SDK-independent model/helper tests
-make test            # includes mock-SDK rendering; needs SDK headers
-make test-sanitize   # same suite with address/undefined-behavior checks
-make simulator       # compile Simulator code
-make device          # compile ARM code
-make check-stack     # inspect bounded ARM stack usage
-make all             # create local debug touchtyping-keyboard.pdx
-```
+[itch.io feedback](https://itch.io/post/17746366) · [Reddit discussion](https://www.reddit.com/r/PlaydateConsole/comments/1xhutcf/i_made_brb_a_real_online_chat_messenger_for_your/)
 
-[`examples/keyboard_minimal.c`](examples/keyboard_minimal.c) is the complete C SDK
-entry point compiled directly by the Makefile. It opens an editor, copies
-saved text into host storage, and lets A reopen it. It initializes the library
-once, uses the built-in Roobert font, and passes input updates and rendering
-every visible frame. Local
-builds are for internal debugging; this repository distributes source rather
-than a release PDX or ZIP. Automated checks do not establish hardware validation.
+## 62% fewer button presses
 
-## Use it in your game
+Tap-only comparison: the same 12 English/German phrases, 177 characters.
 
-Copy `src/`, the three `Source/keyboard/` image tables and their license notices.
-Compile the seven C files listed in the [integration guide](docs/integration.md)
-with the SDK headers and `-lm`. The optional `Source/unicode/glyphs.bin` adds
-broader Unicode rendering. Embedded Everyday emoji need no external atlas.
+| Keyboard | Button presses | Touchtyping saves |
+| --- | ---: | ---: |
+| **Touchtyping** | **480** | — |
+| Playdate's built-in keyboard (SDK 3.1.2) | 1,270 | **62.2%** |
+| ABC grid from bill's 1.0.1 | 788 | **39.1%** |
+
+Button presses counted; typing time not measured.
+[Method, full results and runnable benchmark →](docs/benchmarks/README.md)
+
+## Put it in your app
+
+The library is **C**, uses the **[Playdate SDK](https://play.date/dev/)**, and runs
+entirely on the device.
+
+1. Copy `src/`, `Source/keyboard/` and the [license notices](THIRD_PARTY.md) into
+   your project.
+2. Add the [seven C files](docs/integration.md#copy-the-dependencies) to your
+   build and link `-lm`.
+3. Initialize once, open it when you need text, and pass it your frame's input:
 
 ```c
-static HelloKeyboard keyboard;       // Large persistent state: avoid the ARM stack.
+static HelloKeyboard keyboard;
+
+// Once at startup.
 HelloKeyboardConfig config;
 hello_keyboard_default_config(&config);
 hello_keyboard_init_with_config(&keyboard, pd, &config);
-hello_keyboard_open_configured(&keyboard, "", NULL);
+
+// Open an editor.
+hello_keyboard_open_configured(&keyboard, "Hello Playdate!", NULL);
+
+// In your update loop while the keyboard is visible.
+HelloKeyboardResult result = hello_keyboard_update(
+    &keyboard, now, buttons, pressed, released, crank_delta);
+hello_keyboard_draw(&keyboard, now);
 ```
 
-Text is UTF-8; editing and cursor movement respect grapheme clusters. Defaults
-allow 160 graphemes within a separate 4096-byte ceiling. Configure field type,
-length, byte limit, trimming, captions and feedback for each view. Emoji entry
-and the picker are configurable; the included set has 21 original 1-bit motifs.
-Unicode rendering has coverage and shaping limits described in the guide.
+On `HELLO_KEYBOARD_DONE`, copy `hello_keyboard_text(&keyboard)` and close the
+editor with `hello_keyboard_close`. Your app decides where the text goes.
 
-The host owns the SDK, optional font/Unicode renderer and callback contexts.
-The keyboard copies text, groups, captions and field policies; custom emoji
-catalogs remain borrowed immutable data. Keep keyboard state for application
-lifetime, copy borrowed result text before reuse, and close the editor before
-restoring host menu items. See [ownership and lifecycle](docs/integration.md#ownership-memory-and-teardown).
+Use the [complete C example](examples/keyboard_minimal.c) as a starting point.
+Set `PLAYDATE_SDK_PATH`, then run `make all` to build it locally. To add the wider
+Unicode font, include `Source/unicode/glyphs.bin` and follow the
+[integration guide](docs/integration.md). It also covers custom groups, emoji
+sets, field limits, labels and timing.
 
-Library defaults use 350 ms hold / 100 ms repeat and button-navigation scale
-`1.0`. brb configures scale `0.5` (175 ms / 50 ms for selection), its own row
-height and ten leading cells in group 1. Those are explicit host choices;
-crank policy remains separate. API identifiers retain their original
-`HelloKeyboard` / `Brb` names for compatibility.
+## In my apps
 
-## Source and licenses
+- **[brb - chat messenger](https://geekhunger.itch.io/brb-chat-messenger)** — Online
+  chat on Playdate. Type messages, set your name and add your friends.
+- **[bill’s](https://geekhunger.itch.io/bills)** — Project timers and session notes,
+  using the earlier Lua keyboard.
 
-Current implementation: native C under `src/`. The earlier Lua implementation
-and its original documentation remain archived under [`legacy/lua/`](legacy/lua/);
-they are not a current Lua binding or a behavior-parity claim.
+## Source & license
 
-Code and original artwork: [MIT](LICENSE). Font-derived assets and Unicode data
-retain their [third-party licenses and credits](THIRD_PARTY.md). Playdate is a
-product of Panic; this is an independent community library.
+Code and original artwork: **[MIT](LICENSE)**. Fonts and Unicode data retain
+their [own licenses](THIRD_PARTY.md).
+
+The C library lives in `src/`. The earlier Lua version is preserved in
+[`legacy/lua/`](legacy/lua/). Run `make test`, `make test-sanitize` and
+`make check-stack` for the native checks.
+
+Made by [Geekhunger](https://geekhunger.com).

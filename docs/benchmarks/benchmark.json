@@ -1,0 +1,414 @@
+{
+  "metric": "One D-pad or A/B press; matching releases tracked separately. Taps only, no auto-repeat, crank, idle acceptance, corrections or Done/Cancel. Current C is executed and text checked after every direction release. ABC reproduces bill\u2019s 1.0.1/build 3 commit 0c6275a208d7266965a2263f08d70123f169c189; Wrap+ and Circle reproduce the archived prototype study. The SDK comparison models CoreLibs/keyboard.lua 3.1.2 navigation and A entry, with route replay; it does not measure typing time.",
+  "scope": "Fixed development corpus; lowercase ASCII, fresh module/session per phrase; no human timing/WPM inference.",
+  "sdk_baseline_provenance": {
+    "version": "3.1.2",
+    "file": "CoreLibs/keyboard.lua",
+    "sha256": "46c83d151a34b20a35fa7e0eb5299e90cfb945e12d2b4ac31ae18ab11070a5ea",
+    "documentation": "https://sdk.play.date/3.1.2/Inside%20Playdate.html#M-keyboard",
+    "initial_state": "Fresh module/session: upper A selected; symbols row 1, shared upper/lower row 1, menu row 2 (OK). Normal capitalization. show() alone retains letter rows.",
+    "route_legend": "U/D/L/R are D-pad taps; A inserts selected character/Space. Each tap has one matching release."
+  },
+  "source_sha256": {
+    "src/keyboard_model.c": "d592a856b88cb95cbea30bca754033821515483124a56e4b192e276dec78e4f5",
+    "src/emoji_set.c": "b3771d3dc9f2a73dc3f317ffc8d8911366e779b21ad05f42e66cb52187dc7041",
+    "src/unicode.c": "1084a479b52753de5bf704df9890008751dbcf1da242f91ffdd4289b59431062",
+    "src/input_field.c": "624987a4702bff940babe35afb54d583455b14c2c204ee0dab67d1a5834ff13b",
+    "src/keyboard_model.h": "b11ff9d971e1505088e070a3908759fe4f917aebd8fc944975450c8cf82d221e",
+    "src/input_timing.h": "d4b2254d6b19ac39824d1dfda7e8b391fcbffa0697528dce34576f4586d8d7f0",
+    "tools/benchmark_model.c": "481f74c807c61b544f56b4be9a508bc45e8286861e91f3e2e908d2a793d71510",
+    "tools/benchmark_keyboard.py": "5367aca49ca019b7dbe0403348f31e9551963c87a33029ac08c5b7d57af27e6e",
+    "docs/benchmarks/corpus.json": "e16a047e13cb8d7e55fd63b9118409d5af9a09a2a50619f5aa3a1ab0220f101f"
+  },
+  "totals": {
+    "Combined": {
+      "characters": 177,
+      "phrases": 12,
+      "current_c_presses": 480,
+      "current_c_releases": 480,
+      "current_c_release_commits": 177,
+      "baselines": {
+        "Playdate SDK 3.1.2 keyboard": {
+          "presses": 1270,
+          "releases": 1270,
+          "current_c_fewer_presses_percent": 62.20472440944882
+        },
+        "bill\u2019s 1.0.1 ABC": {
+          "presses": 788,
+          "releases": 788,
+          "current_c_fewer_presses_percent": 39.086294416243646
+        },
+        "Wrap+ prototype": {
+          "presses": 609,
+          "releases": 609,
+          "current_c_fewer_presses_percent": 21.182266009852214
+        },
+        "Circle D-pad prototype": {
+          "presses": 819,
+          "releases": 819,
+          "current_c_fewer_presses_percent": 41.39194139194139
+        }
+      }
+    },
+    "English": {
+      "characters": 95,
+      "phrases": 6,
+      "current_c_presses": 247,
+      "current_c_releases": 247,
+      "current_c_release_commits": 95,
+      "baselines": {
+        "Playdate SDK 3.1.2 keyboard": {
+          "presses": 661,
+          "releases": 661,
+          "current_c_fewer_presses_percent": 62.632375189107414
+        },
+        "bill\u2019s 1.0.1 ABC": {
+          "presses": 411,
+          "releases": 411,
+          "current_c_fewer_presses_percent": 39.90267639902676
+        },
+        "Wrap+ prototype": {
+          "presses": 310,
+          "releases": 310,
+          "current_c_fewer_presses_percent": 20.322580645161292
+        },
+        "Circle D-pad prototype": {
+          "presses": 437,
+          "releases": 437,
+          "current_c_fewer_presses_percent": 43.47826086956522
+        }
+      }
+    },
+    "German": {
+      "characters": 82,
+      "phrases": 6,
+      "current_c_presses": 233,
+      "current_c_releases": 233,
+      "current_c_release_commits": 82,
+      "baselines": {
+        "Playdate SDK 3.1.2 keyboard": {
+          "presses": 609,
+          "releases": 609,
+          "current_c_fewer_presses_percent": 61.74055829228243
+        },
+        "bill\u2019s 1.0.1 ABC": {
+          "presses": 377,
+          "releases": 377,
+          "current_c_fewer_presses_percent": 38.19628647214854
+        },
+        "Wrap+ prototype": {
+          "presses": 299,
+          "releases": 299,
+          "current_c_fewer_presses_percent": 22.073578595317723
+        },
+        "Circle D-pad prototype": {
+          "presses": 382,
+          "releases": 382,
+          "current_c_fewer_presses_percent": 39.005235602094245
+        }
+      }
+    }
+  },
+  "phrases": [
+    {
+      "language": "English",
+      "text": "client notes",
+      "current_c": {
+        "characters": 12,
+        "dpad_presses": 12,
+        "selection_presses": 18,
+        "presses": 30,
+        "releases": 30,
+        "release_commits": 12,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 84,
+        "releases": 84,
+        "dpad_presses": 72,
+        "selection_presses": 12,
+        "replay_verified": true,
+        "route": "DDRADDDDDDDDDAUUUAUUUUADDDDDDDDDADDDDDDARUALUUUUUUADADDDDDADDDDDDDDDDDAUUUUUUUUUUUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 84,
+      "bill\u2019s 1.0.1 ABC": 53,
+      "Wrap+ prototype": 43,
+      "Circle D-pad prototype": 52
+    },
+    {
+      "language": "English",
+      "text": "project update",
+      "current_c": {
+        "characters": 14,
+        "dpad_presses": 14,
+        "selection_presses": 27,
+        "presses": 41,
+        "releases": 41,
+        "release_commits": 14,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 94,
+        "releases": 94,
+        "dpad_presses": 80,
+        "selection_presses": 14,
+        "replay_verified": true,
+        "route": "UUUUUUUUUUURADDAUUUAUUUUUAUUUUUAUUAUUUUUUUUUARUALDAUUUUUAUUUUUUUUUUUUAUUUAUUUUUUUADDDDDDDDDDDA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 94,
+      "bill\u2019s 1.0.1 ABC": 57,
+      "Wrap+ prototype": 47,
+      "Circle D-pad prototype": 67
+    },
+    {
+      "language": "English",
+      "text": "meet anna at noon",
+      "current_c": {
+        "characters": 17,
+        "dpad_presses": 17,
+        "selection_presses": 21,
+        "presses": 38,
+        "releases": 38,
+        "release_commits": 17,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 104,
+        "releases": 104,
+        "dpad_presses": 87,
+        "selection_presses": 17,
+        "replay_verified": true,
+        "route": "DDDDDDDDDDDDRAUUUUUUUUAAUUUUUUUUUUUARUALDDDDDDDAUUUUUUUUUUUUUAAUUUUUUUUUUUUUARALAUUUUUUUARALUUUUUUADAAUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 104,
+      "bill\u2019s 1.0.1 ABC": 73,
+      "Wrap+ prototype": 45,
+      "Circle D-pad prototype": 70
+    },
+    {
+      "language": "English",
+      "text": "weekly planning",
+      "current_c": {
+        "characters": 15,
+        "dpad_presses": 15,
+        "selection_presses": 30,
+        "presses": 45,
+        "releases": 45,
+        "release_commits": 15,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 105,
+        "releases": 105,
+        "dpad_presses": 90,
+        "selection_presses": 15,
+        "replay_verified": true,
+        "route": "UUUURADDDDDDDDAADDDDDDADAUUUUUUUUUUUUUARUALUUUUUUUUUAUUUUAUUUUUUUUUUUAUUUUUUUUUUUUUAAUUUUUADDDDDAUUUUUUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 105,
+      "bill\u2019s 1.0.1 ABC": 58,
+      "Wrap+ prototype": 43,
+      "Circle D-pad prototype": 74
+    },
+    {
+      "language": "English",
+      "text": "important reminder",
+      "current_c": {
+        "characters": 18,
+        "dpad_presses": 18,
+        "selection_presses": 29,
+        "presses": 47,
+        "releases": 47,
+        "release_commits": 18,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 125,
+        "releases": 125,
+        "dpad_presses": 107,
+        "selection_presses": 18,
+        "replay_verified": true,
+        "route": "DDDDDDDDRADDDDADDDAUADDDADDADDDDDDDAUUUUUUUUUUUUUADDDDDDARUALUUAUUUUUUUUUUUUUADDDDDDDDAUUUUADDDDDAUUUUUUUUUUADAUUUUUUUUUUUUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 125,
+      "bill\u2019s 1.0.1 ABC": 73,
+      "Wrap+ prototype": 64,
+      "Circle D-pad prototype": 85
+    },
+    {
+      "language": "English",
+      "text": "release notes ready",
+      "current_c": {
+        "characters": 19,
+        "dpad_presses": 19,
+        "selection_presses": 27,
+        "presses": 46,
+        "releases": 46,
+        "release_commits": 19,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 149,
+        "releases": 149,
+        "dpad_presses": 130,
+        "selection_presses": 19,
+        "replay_verified": true,
+        "route": "UUUUUUUUURAUUUUUUUUUUUUUADDDDDDDAUUUUUUUAUUUUAUUUUUUUUADDDDDDDDDDDDARUALDDDDDDDDDADADDDDDADDDDDDDDDDDAUUUUUUUUUUUUARALUAUUUUUUUUUUUUUAUUUUADDDAUUUUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 149,
+      "bill\u2019s 1.0.1 ABC": 97,
+      "Wrap+ prototype": 68,
+      "Circle D-pad prototype": 89
+    },
+    {
+      "language": "German",
+      "text": "neue notiz",
+      "current_c": {
+        "characters": 10,
+        "dpad_presses": 10,
+        "selection_presses": 16,
+        "presses": 26,
+        "releases": 26,
+        "release_commits": 10,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 91,
+        "releases": 91,
+        "dpad_presses": 81,
+        "selection_presses": 10,
+        "replay_verified": true,
+        "route": "UUUUUUUUUUUUURAUUUUUUUUUAUUUUUUUUUUADDDDDDDDDDARUALDDDDDDDDDADADDDDDAUUUUUUUUUUUAUUUUUUUUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 91,
+      "bill\u2019s 1.0.1 ABC": 48,
+      "Wrap+ prototype": 42,
+      "Circle D-pad prototype": 47
+    },
+    {
+      "language": "German",
+      "text": "termin morgen",
+      "current_c": {
+        "characters": 13,
+        "dpad_presses": 13,
+        "selection_presses": 22,
+        "presses": 35,
+        "releases": 35,
+        "release_commits": 13,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 90,
+        "releases": 90,
+        "dpad_presses": 77,
+        "selection_presses": 13,
+        "replay_verified": true,
+        "route": "UUUUUUURADDDDDDDDDDDAUUUUUUUUUUUUUAUUUUUAUUUUADDDDDARUALUADDADDDAUUUUUUUUUUUAUUADDDDDDDDDA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 90,
+      "bill\u2019s 1.0.1 ABC": 66,
+      "Wrap+ prototype": 48,
+      "Circle D-pad prototype": 60
+    },
+    {
+      "language": "German",
+      "text": "einkaufsliste",
+      "current_c": {
+        "characters": 13,
+        "dpad_presses": 13,
+        "selection_presses": 25,
+        "presses": 38,
+        "releases": 38,
+        "release_commits": 13,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 102,
+        "releases": 102,
+        "dpad_presses": 89,
+        "selection_presses": 13,
+        "replay_verified": true,
+        "route": "DDDDRADDDDADDDDDAUUUAUUUUUUUUUUAUUUUUUADDDDDDDDDDDAUUUUUUUUUUUUUAUUUUUUUAUUUADDDDDDDDDDADADDDDDDDDDDDA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 102,
+      "bill\u2019s 1.0.1 ABC": 71,
+      "Wrap+ prototype": 53,
+      "Circle D-pad prototype": 65
+    },
+    {
+      "language": "German",
+      "text": "besprechung um zehn",
+      "current_c": {
+        "characters": 19,
+        "dpad_presses": 19,
+        "selection_presses": 40,
+        "presses": 59,
+        "releases": 59,
+        "release_commits": 19,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 140,
+        "releases": 140,
+        "dpad_presses": 121,
+        "selection_presses": 19,
+        "replay_verified": true,
+        "route": "DRADDDAUUUUUUUUUUUUAUUUADDAUUUUUUUUUUUUUAUUADDDDDAUUUUUUUUUUUUUAUUUUUUUAUUUUUUUARUALUUUUUUUUUUUUAUUUUUUUUARALUUUUUUUUUUUUUADDDDDADDDADDDDDDA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 140,
+      "bill\u2019s 1.0.1 ABC": 79,
+      "Wrap+ prototype": 68,
+      "Circle D-pad prototype": 90
+    },
+    {
+      "language": "German",
+      "text": "projekt status",
+      "current_c": {
+        "characters": 14,
+        "dpad_presses": 14,
+        "selection_presses": 26,
+        "presses": 40,
+        "releases": 40,
+        "release_commits": 14,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 78,
+        "releases": 78,
+        "dpad_presses": 64,
+        "selection_presses": 14,
+        "replay_verified": true,
+        "route": "UUUUUUUUUUURADDAUUUAUUUUUAUUUUUADDDDDDADDDDDDDDDARUALUADADDDDDDDAUUUUUUUADAUUA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 78,
+      "bill\u2019s 1.0.1 ABC": 53,
+      "Wrap+ prototype": 43,
+      "Circle D-pad prototype": 64
+    },
+    {
+      "language": "German",
+      "text": "kunden termin",
+      "current_c": {
+        "characters": 13,
+        "dpad_presses": 13,
+        "selection_presses": 22,
+        "presses": 35,
+        "releases": 35,
+        "release_commits": 13,
+        "replay_verified": true
+      },
+      "sdk_replay": {
+        "presses": 108,
+        "releases": 108,
+        "dpad_presses": 95,
+        "selection_presses": 13,
+        "replay_verified": true,
+        "route": "DDDDDDDDDDRADDDDDDDDDDAUUUUUUUAUUUUUUUUUUADADDDDDDDDDARUALDDDDDDADDDDDDDDDDDAUUUUUUUUUUUUUAUUUUUAUUUUADDDDDA"
+      },
+      "Playdate SDK 3.1.2 keyboard": 108,
+      "bill\u2019s 1.0.1 ABC": 60,
+      "Wrap+ prototype": 45,
+      "Circle D-pad prototype": 56
+    }
+  ]
+}
